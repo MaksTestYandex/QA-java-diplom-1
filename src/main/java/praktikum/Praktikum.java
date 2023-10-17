@@ -1,4 +1,4 @@
-package com.praktikum;
+package praktikum;
 
 import java.util.List;
 
