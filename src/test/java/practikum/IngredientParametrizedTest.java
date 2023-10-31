@@ -9,7 +9,6 @@ import praktikum.IngredientType;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-
 public class IngredientParametrizedTest {
     private final IngredientType type;
     private final String name;
@@ -21,7 +20,7 @@ public class IngredientParametrizedTest {
         this.price = price;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Проверка ингредиентов. Тестовые данные {index} : тип = {0}, наименование = {1}, ценв = {2}")
     public static Object[][] getIngredientData() {
         return new Object[][]{
                 {IngredientType.SAUCE, "hot sauce", 10.10f},
@@ -35,8 +34,10 @@ public class IngredientParametrizedTest {
 
     @Test
     public void shouldCreateIngredients() {
+        int priceDelta = 0;
+
         Ingredient ingredient = new Ingredient(type, name, price);
-        assertEquals(price, ingredient.getPrice(), 0);
+        assertEquals(price, ingredient.getPrice(), priceDelta);
         assertEquals(name, ingredient.getName());
         assertEquals(type, ingredient.getType());
     }

@@ -13,23 +13,22 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class BurgerParametrizeTest {
-
     private final float bunPrice;
     private final float ingredientPrice;
 
-    private final float burgerPrice;
+    private final float expectedBurgerPrice;
 
     private final Bun bun = Mockito.mock();
 
     private final Ingredient ingredient = Mockito.mock();
 
-    public BurgerParametrizeTest(float bunPrice, float ingredientPrice, float burgerPrice) {
+    public BurgerParametrizeTest(float bunPrice, float ingredientPrice, float expectedBurgerPrice) {
         this.bunPrice = bunPrice;
         this.ingredientPrice = ingredientPrice;
-        this.burgerPrice = burgerPrice;
+        this.expectedBurgerPrice = expectedBurgerPrice;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Проверка стоимости бургера. Тестовые данные {index}: цена булочки = {0}, цена ингредиента = {1}, ожидаемая цена бургера = {2}")
     public static Object[][] getIngredientData() {
         return new Object[][]{
                 {1, 2, 4},
@@ -41,6 +40,8 @@ public class BurgerParametrizeTest {
 
     @Test
     public void shouldGetPrice() {
+        int expectedPriceDelta = 0;
+
         Burger burger = new Burger();
         burger.setBuns(bun);
         burger.addIngredient(ingredient);
@@ -48,7 +49,7 @@ public class BurgerParametrizeTest {
         when(bun.getPrice()).thenReturn(bunPrice);
         when(ingredient.getPrice()).thenReturn(ingredientPrice);
 
-        assertEquals(burgerPrice, burger.getPrice(), 0);
+        assertEquals(expectedBurgerPrice, burger.getPrice(), expectedPriceDelta);
     }
 
 }
